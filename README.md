@@ -3,7 +3,6 @@
 Bu proje, konser ve etkinlik bilgilerini yönetmek için bir sistemdir. Kullanıcılar etkinlik ekleyebilir, arayabilir ve bilet satın alabilir.
 
 ## Özellikler
-- **Etkinlik Ekleme:** Sanatçı, mekan, tarih, saat ve bilet fiyatı bilgisi eklenebilir.
 - **Etkinlik Arama:** Şehir, sanatçı veya tarih kriterlerine göre arama yapılabilir.
 - **Bilet Satın Alma:** Kullanıcılar etkinlik seçip bilet satın alabilir.
 
