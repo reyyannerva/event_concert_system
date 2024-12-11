@@ -1,6 +1,6 @@
 # Konser ve Etkinlik Bilgi Sistemi
 
-Bu proje, konser ve etkinlik bilgilerini yönetmek için bir sistemdir. Kullanıcılar etkinlik ekleyebilir, arayabilir ve bilet satın alabilir.
+Bu proje, konser ve etkinlik bilgilerini yönetmek için bir sistemdir. Kullanıcılar etkinlik arayabilir ve bilet satın alabilir.
 
 ## Özellikler
 - **Etkinlik Arama:** Şehir, sanatçı veya tarih kriterlerine göre arama yapılabilir.
