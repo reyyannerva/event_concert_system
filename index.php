@@ -3,25 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konser ve Etkinlik Sistemi</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Konser & Etkinlik Bilgi Sistemi</title>
+    <link rel="stylesheet" href="asset_styles.css">
 </head>
-<body class="bg-dark text-white">
-    <div class="container text-center my-5">
-    <div class="d-flex justify-content-center gap-3 mt-4">
-    <a href="add_event.php" class="btn btn-primary btn-lg">Etkinlik Ekle</a>
-    <a href="search_event.php" class="btn btn-success btn-lg">Etkinlik Ara</a>
-    <a href="all_events.php" class="btn btn-info btn-lg">Tüm Etkinlikler</a>
-</div>
-
-        <h1 class="display-4">🎵 Konser ve Etkinlik Sistemi 🎤</h1>
-        <p class="lead">Tüm konser ve etkinlik bilgilerine kolayca erişin!</p>
-        <div class="d-flex justify-content-center gap-3 mt-4">
-            <a href="add_event.php" class="btn btn-primary btn-lg">Etkinlik Ekle</a>
-            <a href="search_event.php" class="btn btn-success btn-lg">Etkinlik Ara</a>
+<body>
+    <header class="hero-section">
+        <h1>Konser & Etkinlik Bilgi Sistemi</h1>
+        <p>En iyi etkinlikleri keşfedin ve eğlenin!🥳</p>
+        <div class="navigation">
+            <a href="filtered_events.php" class="nav-button">Etkinlikleri Filtrele</a>
+            
+            <a href="all_events.php" class="nav-button">Tüm Etkinlikleri Gör</a>
         </div>
-    </div>
+    </header>
+
+    <main class="container">
+        <h2>Öne Çıkan Etkinlikler</h2>
+        <div class="event-card">
+            <img src="images/event1.jpg" alt="Müzik Gecesi">
+            <h3>Müzik Gecesi</h3>
+            <p>Harika bir canlı müzik deneyimi yaşayın.</p>
+            <a href="event_details.php?id=1" class="filter-button">Detayları Gör</a>
+        </div>
+        <div class="event-card">
+            <img src="images/event2.jpg" alt="Sanat Sergisi">
+            <h3>Sanat Sergisi</h3>
+            <p>Eşsiz sanat eserlerini keşfedin.</p>
+            <a href="event_details.php?id=2" class="filter-button">Detayları Gör</a>
+        </div>
+    </main>
 </body>
 </html>
 
