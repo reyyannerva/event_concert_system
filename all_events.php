@@ -1,50 +1,82 @@
-<?php include 'config.php'; ?>
+<?php
+include 'config.php'; // Veritabanı bağlantısı
 
+try {
+    // SQL sorgusu: Etkinlik bilgilerini tüm ilişkili tablolardan al
+    $query = "
+        SELECT 
+            e.name AS event_name,
+            et.type AS type,
+            v.name AS venue_name,
+            c.name AS city,
+            a.name AS artist_name,
+            e.date,
+            e.time,
+            e.ticket_price
+        FROM events e
+        LEFT JOIN event_types et ON e.type_id = et.id
+        LEFT JOIN venues v ON e.venue_id = v.id
+        LEFT JOIN cities c ON v.city_id = c.id
+        LEFT JOIN artists a ON e.artist_id = a.id
+        ORDER BY e.date ASC
+    ";
+
+    $result = $conn->query($query);
+} catch (PDOException $e) {
+    die("Veritabanı sorgu hatası: " . $e->getMessage());
+}
+?>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tüm Etkinlikler</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="asset_styles.css"> <!-- CSS Dosyası -->
 </head>
-<body class="bg-light">
-    <div class="container my-5">
-        <h1 class="text-center text-info mb-4">Tüm Etkinlikler</h1>
-        <table class="table table-bordered table-hover bg-white">
-            <thead class="table-primary">
+<body>
+    <header>
+        <h1>📅 Tüm Etkinlikler</h1>
+    </header>
+    <div class="container">
+        <table class="table">
+            <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Sanatçı</th>
-                    <th>Mekan</th>
+                    <th>Etkinlik Adı</th>
+                    <th>Tür</th>
                     <th>Şehir</th>
+                    <th>Mekan</th>
+                    <th>Sanatçı</th>
                     <th>Tarih</th>
                     <th>Saat</th>
-                    <th>İşlemler</th>
+                    <th>Bilet Fiyatı</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                // Tüm etkinlikleri al
-                $query = "SELECT events.*, venues.name AS venue_name, cities.name AS city_name, artists.name AS artist_name 
-                          FROM events
-                          INNER JOIN venues ON events.venue_id = venues.id
-                          INNER JOIN cities ON venues.city_id = cities.id
-                          INNER JOIN artists ON events.artist_id = artists.id";
-                $stmt = $conn->query($query);
-                $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                    // Tüm alanları kontrol ederek eksik olanlara varsayılan değerler atıyoruz
+                    $event_name = $row['event_name'] ?? 'Bilinmiyor';
+                    $type = $row['type'] ?? 'Belirtilmemiş';
+                    $city = $row['city'] ?? 'Bilinmiyor';
+                    $venue = $row['venue_name'] ?? 'Belirtilmemiş';
+                    $artist = $row['artist_name'] ?? 'Bilinmiyor';
+                    $date = $row['date'] ?? 'Tarih Yok';
+                    $time = $row['time'] ?? 'Saat Yok';
+                    $price = $row['ticket_price'] ?? 'Fiyat Yok';
 
-                foreach ($events as $index => $event) {
-                    echo "<tr>";
-                    echo "<td>" . ($index + 1) . "</td>";
-                    echo "<td>" . htmlspecialchars($event['artist_name']) . "</td>";
-                    echo "<td>" . htmlspecialchars($event['venue_name']) . "</td>";
-                    echo "<td>" . htmlspecialchars($event['city_name']) . "</td>";
-                    echo "<td>" . htmlspecialchars($event['date']) . "</td>";
-                    echo "<td>" . htmlspecialchars($event['time']) . "</td>";
-                    echo "<td><a href='buy_ticket.php?event_id={$event['id']}' class='btn btn-success btn-sm'>Bilet Al</a></td>";
-                    echo "</tr>";
+                    echo "
+                        <tr>
+                            <td>{$event_name}</td>
+                            <td>{$type}</td>
+                            <td>{$city}</td>
+                            <td>{$venue}</td>
+                            <td>{$artist}</td>
+                            <td>{$date}</td>
+                            <td>{$time}</td>
+                            <td>{$price} TL</td>
+                        </tr>
+                    ";
                 }
                 ?>
             </tbody>
