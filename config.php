@@ -1,13 +1,13 @@
 <?php
-$host = "localhost";
-$dbname = "concert_system";
-$username = "root"; // Varsayılan kullanıcı adı
-$password = "";     // Varsayılan şifre
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "etkinlik_db";
 
-try {
-    $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Veritabanı bağlantı hatası: " . $e->getMessage());
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Bağlantı başarısız: " . $conn->connect_error);
 }
 ?>
+
