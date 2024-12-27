@@ -21,7 +21,10 @@ try {
         ORDER BY e.date ASC
     ";
 
-    $result = $conn->query($query);
+    // Sorguyu hazırlayıp çalıştırma
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     die("Veritabanı sorgu hatası: " . $e->getMessage());
 }
@@ -54,7 +57,8 @@ try {
             </thead>
             <tbody>
                 <?php
-                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                // Verileri döngüyle çekme ve tablodaki hücrelere yerleştirme
+                foreach ($result as $row) {
                     // Tüm alanları kontrol ederek eksik olanlara varsayılan değerler atıyoruz
                     $event_name = $row['event_name'] ?? 'Bilinmiyor';
                     $type = $row['type'] ?? 'Belirtilmemiş';
@@ -63,7 +67,7 @@ try {
                     $artist = $row['artist_name'] ?? 'Bilinmiyor';
                     $date = $row['date'] ?? 'Tarih Yok';
                     $time = $row['time'] ?? 'Saat Yok';
-                    $price = $row['ticket_price'] ?? 'Fiyat Yok';
+                    $price = isset($row['ticket_price']) ? number_format($row['ticket_price'], 2) : 'Fiyat Yok';
 
                     echo "
                         <tr>
@@ -72,7 +76,7 @@ try {
                             <td>{$city}</td>
                             <td>{$venue}</td>
                             <td>{$artist}</td>
-                            <td>{$date}</td>
+                            <td>" . date('d-m-Y', strtotime($date)) . "</td>
                             <td>{$time}</td>
                             <td>{$price} TL</td>
                         </tr>
@@ -84,3 +88,4 @@ try {
     </div>
 </body>
 </html>
+
